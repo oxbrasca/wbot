@@ -54,7 +54,7 @@ $FD, $E3, $3A, $8C, $91, $D3, $8D);
 }
 {$ENDREGION}
  Public
-{$REGION 'DeclaraÁıes'}
+{$REGION 'Declara√ß√µes'}
   Const
   RECV_BUFFER_SIZE = 32*1024;
   SEND_BUFFER_SIZE = 8*1024;
@@ -171,10 +171,12 @@ begin
  //SendMessageA;
 end;
 
-
+
+
 {$ENDREGION}
 
-{$REGION 'Read Send Message'}
+
+{$REGION 'Read Send Message'}
 class Procedure TEncDec.ReadMessage;
 var
   P  : sHeader;
@@ -186,7 +188,8 @@ begin
 		nProcPosition := 0;
     exit;
   end;
-  if (nRecvPosition - nProcPosition) < 12 then exit;
+
+  if (nRecvPosition - nProcPosition) < 12 then exit;
 
   Move(pRecvBuffer[nProcPosition], P, sizeof(P));///seta a size
   if(P.Size < 12) or (P.Size > MAX_MESSAGE_SIZE) then   //segundo bot dh $1888
@@ -278,7 +281,7 @@ begin
 		tmp[4] := tmp[3] - class_timer[5];
 		tmp[5] := trunc(tmp[2] / 1000);
 	//	if(tmp[4] <> tmp[5]) and (class_timer[6] <> 0) then
-	//	WriteLog('Timer errado!');// /* Est· mensagem n„o atrapalha nada */
+	//	WriteLog('Timer errado!');// /* Est√° mensagem n√£o atrapalha nada */
    // wrongTime:= (tmp[4] <> tmp[5]) and (class_timer[6] <> 0);
 
     class_timer[6]:= tmp[0];
@@ -286,22 +289,22 @@ begin
 	result:=tmp[1] + class_timer[4];
 end;
 
-class procedure TEncDec.attTime(var T: LongWord);
-const
-SecsPerDay = 24 *60 *60;
+class procedure TEncDec.attTime(var T: DWORD);
+var
+  SystemTime: TSystemTime;
 begin
- if(t <> 0) then
- begin  ////ta mt errado essa merda
-  t:= Trunc((Now -EncodeDate(1970,1,1)) * SecsPerDay);
-  WriteLog('atttime1');
- end;
-// WriteLog('atttime2');
- //if(t <> 0) then t:= Round((time) * 24 * 60 * 60);
-//if(t <> 0) then t:=Trunc( (time -EncodeDate(1970,1,1)) * SecsPerDay);
+  if (T = 0) then
+  begin
+    GetSystemTime(SystemTime);
+    with SystemTime do
+      T := DateTimeToUnix(EncodeDateTime(wYear, wMonth, wDay, wHour, wMinute,
+        wSecond, wMilliseconds));
+  end;
 end;
 
 class procedure TEncDec.attTimerRecv(_new: LongWord);
-begin
+
+begin
 	class_timer[0]:= _new;
   class_timer[1]:= _new;
 	class_timer[2]:= timeGetTime;
@@ -328,7 +331,7 @@ end;
 class function TEncDec.CheckStamp(Value, Delay: LongWOrd): boolean;
 begin
  Result:= False;
- if (Value > 0) then// transiÁ„o de atk pra atk
+ if (Value > 0) then// transi√ß√£o de atk pra atk
  if (GetTime - Value) < Delay then exit;
  result:= True;
 end;
