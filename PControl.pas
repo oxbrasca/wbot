@@ -45,8 +45,8 @@ begin
    $367, $39D, $39E: Damage(Buffer);
    $36C, $366: MovementPacket(Buffer);
    $37F : ReqParty(Buffer);
-   $37E : ExitParty(Buffer);
-   $37D : EnterParty(Buffer);
+   $37E : ExitParty(Buffer);
+   $37D : EnterParty(Buffer);
    $3EA : PartyEvok(Buffer);
    $182 : PutItem(Buffer);
    $376 : MoveItem(Buffer);
@@ -54,11 +54,7 @@ begin
    $3B9 : Buffs(Buffer);
    $101 : SvMsg(Buffer); //106
   end;
- // wait_recv[p_Attack]:= 0;     //p_Attack       Packet.code  tst
- //Writeln('>> '+Inttohex(Packet.code));
 end;
 {$ENDREGION}
 
-
 end.
-
